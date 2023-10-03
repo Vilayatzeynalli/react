@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import "./App.css";
+import { useState, useEffect } from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [state, setState] = useState([]);
+  const [isRequest, setRequest] = useState(false);
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/posts").then(res=>{
+      setState(res.data)
+    
+      // res.data.map((obj:any)=>{
+      //   console.log(obj.userId);
+      // });
+  
+    }
+)
+  }, []);
+  // axios.get(url[, config])
+  return <div className="App">{state && state.map((obj:any)=>{
+    return <h1>{obj.title}</h1>
+  })}</div>;
 }
 
 export default App;
